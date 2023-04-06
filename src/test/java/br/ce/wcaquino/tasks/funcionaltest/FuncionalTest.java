@@ -18,13 +18,14 @@ public class FuncionalTest {
 //		WebDriver driver = new ChromeDriver();
 
 //		DesiredCapabilities cap = DesiredCapabilities.chrome();
-//		WebDriver driver = new RemoteWebDriver(new URL(), cap);		
-		String hubUrl = "http://192.168.64.1:4444/wd/hub";
+//		WebDriver driver = new RemoteWebDriver(new URL(), cap);
+		String hubUrl = "http://192.168.112.2:4444/wd/hub";
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setBrowserName("chrome"); // Replace with the browser you want to use
 		capabilities.setPlatform(Platform.LINUX); // Replace with the operating system you want to use
 		WebDriver driver = new RemoteWebDriver(new URL(hubUrl), capabilities);
-		driver.get("http://localhost:8001/tasks");
+//		driver.get("http://localhost:8001/tasks");
+		driver.get("http://192.168.100.13:8001/tasks");
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		return driver;
 	}
