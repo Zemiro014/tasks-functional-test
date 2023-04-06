@@ -1,24 +1,36 @@
 package br.ce.wcaquino.tasks.funcionaltest;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class FuncionalTest {
 	
-	public WebDriver startDriver() {
-		WebDriver driver = new ChromeDriver();
+	public WebDriver startDriver() throws MalformedURLException {
+//		WebDriver driver = new ChromeDriver();
+
+//		DesiredCapabilities cap = DesiredCapabilities.chrome();
+//		WebDriver driver = new RemoteWebDriver(new URL(), cap);		
+		String hubUrl = "http://192.168.64.1:4444/wd/hub";
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setBrowserName("chrome"); // Replace with the browser you want to use
+		capabilities.setPlatform(Platform.LINUX); // Replace with the operating system you want to use
+		WebDriver driver = new RemoteWebDriver(new URL(hubUrl), capabilities);
 		driver.get("http://localhost:8001/tasks");
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		return driver;
 	}
 	
 	@Test
-	public void deveSalvarTarefaComSucesso() {
+	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
 		WebDriver driver = startDriver();
 		
 		try {
@@ -40,7 +52,7 @@ public class FuncionalTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaSemDescricao() {
+	public void naoDeveSalvarTarefaSemDescricao() throws MalformedURLException {
 		WebDriver driver = startDriver();
 		
 		try {
@@ -60,7 +72,7 @@ public class FuncionalTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaSemData() {
+	public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
 		WebDriver driver = startDriver();
 		
 		try {
@@ -80,7 +92,7 @@ public class FuncionalTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaComDataPassada() {
+	public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
 		WebDriver driver = startDriver();
 		
 		try {
